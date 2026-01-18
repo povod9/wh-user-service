@@ -15,7 +15,7 @@ Role-based Access: Some endpoints are restricted to Managers only.
 -----------------------------------------------------------------------------------
 
 Tech Stack
-Java 21 / Spring Boot 4
+Java 17 / Spring Boot 4
 
 Spring Security + JWT 
 
