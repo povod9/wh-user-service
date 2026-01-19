@@ -27,7 +27,7 @@ public class JwtCore {
         return Jwts.builder()
                 .subject(user.getEmail())
                 .claim("role", user.getRole().name())
-                .claim("id", user.getId())
+                .claim("id", user.getId())  
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(getSigningKey())
