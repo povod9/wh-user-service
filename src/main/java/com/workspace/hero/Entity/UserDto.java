@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,6 +16,6 @@ public class UserDto {
     String firstName;
     String lastName;
     String email;
-    double balance;
+    BigDecimal balance;
     Role role;
 }

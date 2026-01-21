@@ -9,9 +9,11 @@ import com.workspace.hero.Entity.enums.Role;
 import com.workspace.hero.Repository.UserRepository;
 import com.workspace.hero.Security.JwtCore;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -58,7 +60,7 @@ public class UserService {
                 userToCreate.lastName(),
                 userToCreate.email(),
                 passwordEncoder.encode(userToCreate.password()),
-                0.00,
+                BigDecimal.ZERO,
                 Role.USER
         );
 
@@ -90,7 +92,7 @@ public class UserService {
                 managerToCreate.lastName(),
                 managerToCreate.email(),
                 passwordEncoder.encode(managerToCreate.password()),
-                0.00,
+                BigDecimal.ZERO,
                 Role.MANAGER
         );
 
@@ -159,5 +161,24 @@ public class UserService {
         }else {
             throw new IllegalArgumentException("Wrong password");
         }
+    }
+
+    @Transactional
+    public UserDto topUp(
+            Long id,
+            BigDecimal amount
+    )
+    {
+        if(amount.compareTo(BigDecimal.ZERO) <= 0){
+            throw new IllegalArgumentException("Amount must be positive");
+        }
+
+        UserEntity userEntity = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        userEntity.setBalance(userEntity.getBalance().add(amount));
+        repository.save(userEntity);
+
+        return toDto(userEntity);
     }
 }

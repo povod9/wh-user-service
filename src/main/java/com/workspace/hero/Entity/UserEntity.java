@@ -4,9 +4,12 @@ package com.workspace.hero.Entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.workspace.hero.Entity.enums.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 
 @Table(name = "clients")
 @Entity
@@ -34,7 +37,8 @@ public class UserEntity{
     private String password;
 
     @Column(name = "balance", nullable = false)
-    private double balance;
+    @Positive
+    private BigDecimal balance = BigDecimal.ZERO;
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)

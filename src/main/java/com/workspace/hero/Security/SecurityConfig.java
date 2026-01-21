@@ -28,10 +28,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         .requestMatchers("/users/register_user", "/users/register_manager", "/users/login").permitAll()
-
-
                         .requestMatchers(HttpMethod.GET, "/users","/users/{id}").hasRole("MANAGER")
-
+                        .requestMatchers("/users/{id}/top-up").hasRole("MANAGER")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

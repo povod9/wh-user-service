@@ -5,7 +5,6 @@ import com.workspace.hero.Entity.LoginRequest;
 import com.workspace.hero.Entity.Manager;
 import com.workspace.hero.Entity.User;
 import com.workspace.hero.Entity.UserDto;
-import com.workspace.hero.Entity.UserEntity;
 import com.workspace.hero.Service.UserService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -13,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -87,6 +87,17 @@ public class UserController {
 
         return ResponseEntity.ok(Map.of("token", token));
 
+    }
+
+    @PostMapping("/{id}/top-up")
+    public ResponseEntity<UserDto> topUp(
+            @PathVariable("id") Long id,
+            @RequestParam BigDecimal amount
+    )
+    {
+        log.info("Called method topUp");
+
+        return ResponseEntity.ok(service.topUp(id,amount));
     }
 
 }
